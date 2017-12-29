@@ -1,11 +1,12 @@
 import axios from 'axios';
 import Alert from 'react-native';
 
-export const login = (email, password) => {
+export const login = (email, password, token) => {
     return {
         type: 'LOGIN',
         email: email,
-        password: password
+        password: password,
+        token: token
     };
 };
 
@@ -34,7 +35,7 @@ alert(JSON.stringify(userObj));
         }
         if (response.data.token){
           axios.defaults.headers.common['jwtoken'] = response.data.token;
-          dispatch(login(userObj.email, null));
+          dispatch(login(userObj.email, null, response.data.token));
         }
       }
   ).catch( (err) => alert(err));

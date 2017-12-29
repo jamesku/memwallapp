@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, Text, View, Button,
-StyleSheet, FlatList, RefreshControl, TouchableOpacity, Animated, Platform, StatusBar } from 'react-native';
+StyleSheet, FlatList, RefreshControl, TouchableOpacity, ActivityIndicator, Animated, Platform, StatusBar } from 'react-native';
 import { logout } from '../redux/actions/auth';
-
 
 
 const HEADER_MAX_HEIGHT = 300;
@@ -199,5 +198,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-Expo.registerRootComponent(App);

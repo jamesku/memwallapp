@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import Application from './pages/Application';
 import Login from './src/components/login/Login';
 import configureStore from './redux/store/configureStore';
+import { loadState, saveState } from './redux/store/localStorage.js';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -25,7 +26,13 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-const store = configureStore();
+const persistedState = loadState();
+const store = configureStore(persistedState);
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
+
 export default class App extends Component{
   render() {
     return (

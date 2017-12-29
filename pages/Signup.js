@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Button, Alert } from 'react-native';
+import { View, StyleSheet, Button, Alert, Text } from 'react-native';
 import { connect } from 'react-redux';
-import {submitNewUser} from '../redux/actions/auth';
+import {submitNewUser, logout} from '../redux/actions/auth';
 
 import t from 'tcomb-form-native'; // 0.6.9
 
@@ -64,6 +64,11 @@ class Signup extends Component {
 
   };
 
+  logout (e) {
+      this.props.onLogout();
+      e.preventDefault();
+  }
+
   handleSubmit = () => {
     const value = this.refs.form.getValue();
     const userObj = { FirstName:value.firstname, LastName:value.lastname, Password:value.password, Email:value.email.toLowerCase()};
@@ -85,9 +90,8 @@ class Signup extends Component {
         />
 
         <View style={{margin: 7}}>
-      // <Button onPress={(e) => this.userLogin(e)} title="Log In"/>
-      <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => this.login(e)}>Sign Up</Text>
-      </View>  
+      <Text style={{fontSize: 16, color: 'blue'}} onPress={(e) => this.logout(e)}>Back to Login</Text>
+      </View>
       </View>
     );
   }
@@ -108,7 +112,8 @@ const mapDispatchToProps = (dispatch) => {
       if (value) {
         dispatch(submitNewUser(value));
       }
-    }
+    },
+    onLogout: () => { dispatch(logout()); }
   };
 };
 
