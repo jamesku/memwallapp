@@ -8,7 +8,7 @@ export const loadState = () => {
     }
     return JSON.parse(serializedState);
   } catch (er){
-    return undefined;
+    alert(er);
   }
 };
 
@@ -17,6 +17,6 @@ export const saveState = (state) => {
     const serializedState = JSON.stringify(state);
     AsyncStorage.setItem('state',serializedState);
   } catch (err) {
-    console.log(err);
+    alert(err);
   }
 };

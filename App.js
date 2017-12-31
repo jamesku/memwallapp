@@ -28,8 +28,9 @@ const instructions = Platform.select({
 
 const persistedState = loadState();
 const store = configureStore(persistedState);
-
+alert(JSON.stringify(persistedState));
 store.subscribe(() => {
+  alert("state change");
   saveState(store.getState());
 });
 
