@@ -16,29 +16,27 @@ import {
 import { Provider } from 'react-redux';
 import Application from './pages/Application';
 import Login from './src/components/login/Login';
-import configureStore from './redux/store/configureStore';
 import { loadState, saveState } from './redux/store/localStorage.js';
+import './ReactotronConfig.js';
+import createAppStore from './redux/store/createAppStore';
+import { PersistGate } from 'redux-persist/lib/integration/react'
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-const persistedState = loadState();
-const store = configureStore(persistedState);
-alert(JSON.stringify(persistedState));
-store.subscribe(() => {
-  alert("state change");
-  saveState(store.getState());
-});
+const {persistor, store} = createAppStore();
+
+// alert(JSON.stringify(persistedState));
+// store.subscribe(() => {
+//   alert("state change" + JSON.stringify(store.getState()));
+//   saveState(store.getState());
+// });
 
 export default class App extends Component{
   render() {
     return (
       <Provider store={store}>
+        <PersistGate persistor={persistor}>
           <Application />
+        </PersistGate>
       </Provider>
     );
   }

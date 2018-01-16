@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
+import menus from './menus';
 
 const rootReducer = combineReducers({
-    auth
+    auth,
+    menus
 });
 
 const srootReducer = (state, action) => {

@@ -26,7 +26,7 @@ export function submitNewUser(userObj){
 alert("sending obk");
 alert(JSON.stringify(userObj));
   return (dispatch) => {
-    axios.post('http://192.168.1.12:8080/signup' , userObj).then(
+    axios.post('http://192.168.1.16:8080/signup' , userObj).then(
       function (response) {
         alert(response);
         if(response.data.error){
@@ -46,7 +46,7 @@ export function loginUser(creds) {
   return (dispatch) => {
 alert(JSON.stringify(creds));
     axios({
-      url: 'http://192.168.1.12:8080/login',
+      url: 'http://192.168.1.16:8080/login',
       timeout: 20000,
       method: 'post',
       data: {creds}
