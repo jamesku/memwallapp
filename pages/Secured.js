@@ -123,7 +123,6 @@ class Secured extends Component {
 
     render() {
 
-
       const headerTranslate = this.state.scrollY.interpolate({
         inputRange: [0, HEADER_SCROLL_DISTANCE],
         outputRange: [0, -HEADER_SCROLL_DISTANCE],
@@ -155,105 +154,107 @@ class Secured extends Component {
       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
       return (
-        <View style={styles.fill}>
 
         <View style={styles.fill}>
 
-        <SideMenu
-        menu={menu}
-        isOpen={this.state.isOpen}
-        openMenuOffset={windowWidth*.80}
-        onChange={isOpen => this.updateMenuState(isOpen)}
-        >
+          <View style={styles.fill}>
 
-        <View style={styles.fill}>
+            <SideMenu
+            menu={menu}
+            isOpen={this.state.isOpen}
+            openMenuOffset={windowWidth*.80}
+            onChange={isOpen => this.updateMenuState(isOpen)}
+            >
 
+              <View style={styles.fill}>
 
-        <View style = {styles.fill}>
-          <StatusBar
-            translucent
-            barStyle="light-content"
-            backgroundColor="rgba(0, 0, 0, 0.251)"
-          />
-          <Animated.ScrollView
-            style={styles.fill}
-            scrollEventThrottle={1}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-              { useNativeDriver: true },
-            )}
-          >
-            {this._renderScrollViewContent()}
-          </Animated.ScrollView>
-          <Animated.View
-            style={[
-              styles.header,
-              { transform: [{ translateY: headerTranslate }] },
-            ]}
-          >
-            <Animated.Image
-              style={[
-                styles.backgroundImage,
-                {
-                  opacity: imageOpacity,
-                  transform: [{ translateY: imageTranslate }],
-                },
-              ]}
-              source={require('../redux/images/cat.jpg')}
-            />
-          </Animated.View>
-          <Animated.View
-            style={[
-              styles.bar,
-              {
-                transform: [
-                  { scale: titleScale },
-                  { translateY: titleTranslate },
-                ],
-              },
-            ]}
-          >
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flex:1, alignItems:'flex-start'}}>
-            <TouchableHighlight onPress={()=> {this._setActiveMenu("star")}}>
-              <Image
-                style={{flex:1}}
-                source={require('./../redux/images/star.png')}
-                resizeMode='contain'
-                />
-              </TouchableHighlight>
-            </View>
+                <View style = {styles.absoluteFill}>
+                  <StatusBar
+                    translucent
+                    barStyle="light-content"
+                    backgroundColor="rgba(0, 0, 0, 0.251)"
+                  />
+                  <Animated.ScrollView
+                  style={styles.fill}
+                  scrollEventThrottle={1}
+                  onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+                    { useNativeDriver: true },
+                  )}
+                  >
 
-            <View style={{flex:1, alignItems:'center'}}>
-              <TextInput
-                style={styles.title}
-                // onChangeText = {return()}
-                placeholder = "happy"
-                underlineColorAndroid = "transparent"
-                multiline={false}
-              />
-            </View>
+                    {this._renderScrollViewContent()}
 
-            <View style={{flex:1, alignItems:'flex-end'}}>
-              <Image
-                style={{flex:1}}
-                source={require('./../redux/images/hamburger.png')}
-                resizeMode='contain'
-              />
-            </View>
+                </Animated.ScrollView>
+
+                <Animated.View
+                  style={[
+                    styles.header,
+                    { transform: [{ translateY: headerTranslate }] },
+                  ]}
+                >
+                  <Animated.Image
+                    style={[
+                      styles.backgroundImage,
+                      {
+                        opacity: imageOpacity,
+                        transform: [{ translateY: imageTranslate }],
+                      },
+                    ]}
+                    source={require('../redux/images/cat.jpg')}
+                  />
+                </Animated.View>
+
+                <Animated.View
+                  style={[
+                    styles.bar,
+                    {
+                      transform: [
+                        { scale: titleScale },
+                        { translateY: titleTranslate },
+                      ],
+                    },
+                  ]}
+                >
+
+                <View style={{flexDirection: 'row'}}>
+                  <View style={{flex:1, alignItems:'flex-start'}}>
+                  <TouchableHighlight onPress={()=> {this._setActiveMenu("star")}}>
+                    <Image
+                      style={{flex:1}}
+                      source={require('./../redux/images/star.png')}
+                      resizeMode='contain'
+                      />
+                    </TouchableHighlight>
+                  </View>
+
+                  <View style={{flex:1, alignItems:'center'}}>
+                    <TextInput
+                      style={styles.title}
+                      // onChangeText = {return()}
+                      placeholder = "happy"
+                      underlineColorAndroid = "transparent"
+                      multiline={false}
+                    />
+                  </View>
+                  <View style={{flex:1, alignItems:'flex-end'}}>
+                    <Image
+                      style={{flex:1}}
+                      source={require('./../redux/images/hamburger.png')}
+                      resizeMode='contain'
+                    />
+                  </View>
+                </View>
+                </Animated.View>
+              </View>
+              <View style={styles.alignBottom}>
+              {this._renderSlidingUpPanel()}
+              </View>
+
+              </View>
+            </SideMenu>
           </View>
-
-          </Animated.View>
         </View>
-
-          {this._renderSlidingUpPanel()}
-          </View>
-          </SideMenu>
-          </View>
-          </View>
-
-
-
 
       );
     }
@@ -282,6 +283,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(Secured);
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
+  },
+  absoluteFill: {
+    left:0,
+    top:0,
+    right:0,
+    bottom:0,
+    position: 'absolute',
+  },
+  alignBottom:{
+    flex:1,
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: 'transparent',
+    width: windowWidth,
+    zIndex:200,
   },
   content: {
     flex: 1,

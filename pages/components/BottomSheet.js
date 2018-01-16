@@ -60,7 +60,6 @@ class BottomSheet extends Component {
   }
 
   _renderAnimatedView(){
-
     return(
     <Animated.View
       style={[styles.subView,
@@ -101,11 +100,10 @@ class BottomSheet extends Component {
         config={config}
         style={(this.state.menuIsHidden) ? styles.menuIsHidden : styles.notHidden}
         >
-        <View style={styles.buttonContainer}>
+        <View style={(this.state.menuIsHidden) ? styles.buttonContainer : styles.greyBackground}>
           {this._renderBottomButton()}
           {this._renderAnimatedView()}
         </View>
-
       </GestureRecognizer>
     );
   }
@@ -114,18 +112,18 @@ class BottomSheet extends Component {
 
 var styles = StyleSheet.create({
   menuIsHidden: {
-    flex: .05,
+    height: wheight/20,
     backgroundColor: "rgba(0,0,0,0)",
   },
   greyBackground: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(211,211,211)',
+    backgroundColor: 'transparent',
     marginTop: 0
   },
   notHidden: {
-    flex: .12,
+    height:wheight/10,
     backgroundColor: "rgba(0,0,0,0)",
   },
   buttonNotHidden: {
