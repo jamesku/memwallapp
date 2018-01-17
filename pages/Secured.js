@@ -29,7 +29,7 @@ class Secured extends Component {
       buttonText: "Show Subview",
       isOpen: false,
       selectedItem: 'About',
-      // visible: false
+      thisActiveMenu: 'none',
     };
   }
 
@@ -112,12 +112,13 @@ class Secured extends Component {
 
     _renderSlidingDownPanel(){
       return (
-        <TopSheet menu={this.state.thisActiveMenu}/>
-      )
-    }
+        <TopSheet menu={this.state.thisActiveMenu} _setActiveMenu={this._setActiveMenu.bind(this)}/>
+      );
+      }
 
     _setActiveMenu(activeMenu) {
-      this.setthisActiveMenu = activeMenu;
+      this.setState({thisActiveMenu : activeMenu});
+      // alert("setActiveMenu called "+ this.state.thisActiveMenu);
       this.props.setActiveMenu(activeMenu);
     }
 
@@ -219,7 +220,7 @@ class Secured extends Component {
 
                 <View style={{flexDirection: 'row'}}>
                   <View style={{flex:1, alignItems:'flex-start'}}>
-                  <TouchableHighlight onPress={()=> {this._setActiveMenu("star")}}>
+                  <TouchableHighlight onPress={()=> {this._setActiveMenu("star");}}>
                     <Image
                       style={{flex:1}}
                       source={require('./../redux/images/star.png')}
@@ -249,6 +250,9 @@ class Secured extends Component {
               </View>
               <View style={styles.alignBottom}>
               {this._renderSlidingUpPanel()}
+              </View>
+              <View style={styles.aligntop}>
+              {this._renderSlidingDownPanel()}
               </View>
 
               </View>
@@ -295,6 +299,14 @@ const styles = StyleSheet.create({
     flex:1,
     position: 'absolute',
     bottom: 0,
+    backgroundColor: 'transparent',
+    width: windowWidth,
+    zIndex:200,
+  },
+  alignTop:{
+    flex:1,
+    position: 'absolute',
+    top: 0,
     backgroundColor: 'transparent',
     width: windowWidth,
     zIndex:200,
