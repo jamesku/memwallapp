@@ -6,6 +6,8 @@ import { logout } from '../redux/actions/auth';
 import { activeMenu } from '../redux/actions/menus';
 import BottomSheet from './components/BottomSheet.js';
 import TopSheet from './components/TopSheet.js';
+import ProfileSheet from './components/ProfileSheet.js';
+import MainSheet from './components/MainSheet.js';
 import SideMenu from 'react-native-side-menu';
 import Menu from './components/Menu';
 
@@ -69,38 +71,10 @@ class Secured extends Component {
     }
 
 
-    _renderSideMenu(){
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
-
+    _renderMainSheet(){
       return (
-        <SideMenu
-        menu={menu}
-        isOpen={this.state.isOpen}
-        onChange={isOpen => this.updateMenuState(isOpen)}
-        >
-
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-          </Text>
-          <Text style={styles.instructions}>
-            To get started, edit index.ios.js
-          </Text>
-          <Text style={styles.instructions}>
-            Press Cmd+R to reload,{'\n'}
-            Cmd+Control+Z for dev menu
-          </Text>
-          <Text style={styles.instructions}>
-            Current selected menu item is: {this.state.selectedItem}
-          </Text>
-        </View>
-        <TouchableOpacity
-          onPress={this.toggle}
-          style={styles.button}
-        >
-        </TouchableOpacity>
-      </SideMenu>
-    );
+      <MainSheet />
+      )
     }
 
 
@@ -112,7 +86,10 @@ class Secured extends Component {
 
     _renderSlidingDownPanel(){
       return (
+        <View>
         <TopSheet menu={this.state.thisActiveMenu} _setActiveMenu={this._setActiveMenu.bind(this)}/>
+        <ProfileSheet menu={this.state.thisActiveMenu} _setActiveMenu={this._setActiveMenu.bind(this)}/>
+        </View>
       );
       }
 
@@ -157,15 +134,6 @@ class Secured extends Component {
       return (
 
         <View style={styles.fill}>
-
-          <View style={styles.fill}>
-
-            <SideMenu
-            menu={menu}
-            isOpen={this.state.isOpen}
-            openMenuOffset={windowWidth*.80}
-            onChange={isOpen => this.updateMenuState(isOpen)}
-            >
 
               <View style={styles.fill}>
 
@@ -239,26 +207,30 @@ class Secured extends Component {
                     />
                   </View>
                   <View style={{flex:1, alignItems:'flex-end'}}>
+                  <TouchableHighlight onPress={()=> {this._setActiveMenu("profile");}}>
                     <Image
                       style={{flex:1}}
                       source={require('./../redux/images/hamburger.png')}
                       resizeMode='contain'
                     />
+                  </TouchableHighlight>
                   </View>
                 </View>
                 </Animated.View>
               </View>
+
               <View style={styles.alignBottom}>
               {this._renderSlidingUpPanel()}
               </View>
               <View style={styles.aligntop}>
               {this._renderSlidingDownPanel()}
               </View>
-
+              <View style={styles.alignBottom}>
+              {this._renderMainSheet()}
               </View>
-            </SideMenu>
+              </View>
+
           </View>
-        </View>
 
       );
     }

@@ -15,7 +15,6 @@ import {
 
 import { Provider } from 'react-redux';
 import Application from './pages/Application';
-import Login from './src/components/login/Login';
 import { loadState, saveState } from './redux/store/localStorage.js';
 import './ReactotronConfig.js';
 import createAppStore from './redux/store/createAppStore';
@@ -23,12 +22,6 @@ import { PersistGate } from 'redux-persist/lib/integration/react'
 
 
 const {persistor, store} = createAppStore();
-
-// alert(JSON.stringify(persistedState));
-// store.subscribe(() => {
-//   alert("state change" + JSON.stringify(store.getState()));
-//   saveState(store.getState());
-// });
 
 export default class App extends Component{
   render() {

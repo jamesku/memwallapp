@@ -2,28 +2,23 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Animated, Image, Dimensions} from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
-var wheight = Dimensions.get('window').height;
-const subviewHeight = wheight/1.2;
 
-class TopSheet extends Component {
+var windowWidth = Dimensions.get('window').width;
+var windowHeight = Dimensions.get('window').height;
+const subviewWidth = windowWidth;
+
+class MainSheet extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       backgroundColor: '#fff',
-      bounceValue: new Animated.Value(0-subviewHeight),  //This is the initial position of the subview
+      bounceValue: new Animated.Value(subviewWidth),  //This is the initial position of the subview
       menuIsHidden: true,
     };
   }
 
-  componentDidUpdate() {
-    if (this.props.menu === "star"){
-      this._toggleSubviewDown();
-    }
-  }
-
-
-  _toggleSubviewDown() {
+  _toggleSubviewLeft() {
 
       var toValue = 0;
 
@@ -40,9 +35,10 @@ class TopSheet extends Component {
       ).start();
     }
 
-  _toggleSubviewUp() {
+  _toggleSubviewRight() {
 
-      var toValue = 0-subviewHeight;
+      //controls width of tab
+      var toValue = subviewWidth/1.2;
 
       //This will animate the transalteY of the subview between 0 & 100 depending on its current state
       //100 comes from the style below, which is the height of the subview.
@@ -55,9 +51,6 @@ class TopSheet extends Component {
           friction: 8,
         }
       ).start();
-        setTimeout(() => {
-          this.props._setActiveMenu("none");
-        }, (1 * 500));
     }
 
 
@@ -65,10 +58,10 @@ class TopSheet extends Component {
     return(
     <Animated.View
       style={[styles.subView,
-      {transform: [{translateY: this.state.bounceValue}]}]}
+      {transform: [{translateX: this.state.bounceValue}]}]}
     >
-    <View style={{flexDirection: 'row', flex:.8}}>
-    <Text> test </Text>
+    <View style={{flexDirection: 'column', flex:.8}}>
+    <Text> PROFILEtest </Text>
         </View>
       </Animated.View>
     );
@@ -81,11 +74,10 @@ class TopSheet extends Component {
       directionalOffsetThreshold: 80
     };
 
-if(this.props.menu === "star"){
     return (
       <GestureRecognizer
-        onSwipeUp={()=> {this._toggleSubviewUp()}}
-        onSwipeDown={()=> {this._toggleSubviewUp()}}
+        onSwipeRight={()=> {this._toggleSubviewRight()}}
+        onSwipeLeft={()=> {this._toggleSubviewLeft()}}
         config={config}
         style={styles.notHidden}
         >
@@ -95,11 +87,9 @@ if(this.props.menu === "star"){
       </GestureRecognizer>
     );
   }
-  else {return null};
-  }
 }
 
-var styles = StyleSheet.create({
+  var styles = StyleSheet.create({
   greyBackground: {
     flex: 1,
     justifyContent: 'center',
@@ -108,19 +98,18 @@ var styles = StyleSheet.create({
     marginTop: 0
   },
   notHidden: {
-    height:subviewHeight,
+    width:subviewWidth,
     backgroundColor: "rgba(0,0,0,0)",
   },
-  subView: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+  subView:{
+    // position:'absolute',
+    height:windowHeight,
+    bottom:0,
+    width:windowWidth,
     backgroundColor: "#FFFFFF",
-    zIndex:100,
-    opacity:1,
-    height: subviewHeight,
+    left:0,
   }
-});
+  });
 
-export default TopSheet;
+
+export default MainSheet;

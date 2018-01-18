@@ -5,6 +5,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
 var wheight = Dimensions.get('window').height;
+const subviewHeight = wheight/10;
 
 class BottomSheet extends Component {
 
@@ -12,7 +13,7 @@ class BottomSheet extends Component {
     super(props);
     this.state = {
       backgroundColor: '#fff',
-      bounceValue: new Animated.Value(100),  //This is the initial position of the subview
+      bounceValue: new Animated.Value(subviewHeight),  //This is the initial position of the subview
       menuIsHidden: true
     };
   }
@@ -123,7 +124,7 @@ var styles = StyleSheet.create({
     marginTop: 0
   },
   notHidden: {
-    height:wheight/10,
+    height:subviewHeight,
     backgroundColor: "rgba(0,0,0,0)",
   },
   buttonNotHidden: {

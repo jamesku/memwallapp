@@ -5,7 +5,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 var wheight = Dimensions.get('window').height;
 const subviewHeight = wheight/1.2;
 
-class TopSheet extends Component {
+class ProfileSheet extends Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ class TopSheet extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.menu === "star"){
+    if (this.props.menu === "profile"){
       this._toggleSubviewDown();
     }
   }
@@ -68,7 +68,7 @@ class TopSheet extends Component {
       {transform: [{translateY: this.state.bounceValue}]}]}
     >
     <View style={{flexDirection: 'row', flex:.8}}>
-    <Text> test </Text>
+    <Text> PROFILEtest </Text>
         </View>
       </Animated.View>
     );
@@ -81,7 +81,7 @@ class TopSheet extends Component {
       directionalOffsetThreshold: 80
     };
 
-if(this.props.menu === "star"){
+if(this.props.menu === "profile"){
     return (
       <GestureRecognizer
         onSwipeUp={()=> {this._toggleSubviewUp()}}
@@ -123,4 +123,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default TopSheet;
+export default ProfileSheet;
