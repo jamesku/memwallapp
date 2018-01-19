@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Animated, Image, Dimensions} from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import Secured2 from '../Secured2.js';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -8,6 +9,10 @@ var windowHeight = Dimensions.get('window').height;
 const subviewWidth = windowWidth;
 
 class MainSheet extends Component {
+
+onComponentMount(){
+  this._toggleSubviewLeft();
+}
 
   constructor(props) {
     super(props);
@@ -53,7 +58,6 @@ class MainSheet extends Component {
       ).start();
     }
 
-
   _renderAnimatedView(){
     return(
     <Animated.View
@@ -61,12 +65,14 @@ class MainSheet extends Component {
       {transform: [{translateX: this.state.bounceValue}]}]}
     >
     <View style={{flexDirection: 'column', flex:.8}}>
-    <Text> PROFILEtest </Text>
+
+
+    <Secured2 />
+
         </View>
       </Animated.View>
     );
   }
-
 
   render() {
     const config = {
