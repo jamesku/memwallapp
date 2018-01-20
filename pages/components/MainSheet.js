@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Animated, Image, Dimensions} from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-import Secured2 from '../Secured2.js';
+import MainView from '../MainView.js';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -10,7 +10,7 @@ const subviewWidth = windowWidth;
 
 class MainSheet extends Component {
 
-onComponentMount(){
+componentDidMount(){
   this._toggleSubviewLeft();
 }
 
@@ -64,12 +64,11 @@ onComponentMount(){
       style={[styles.subView,
       {transform: [{translateX: this.state.bounceValue}]}]}
     >
-    <View style={{flexDirection: 'column', flex:.8}}>
+    <View style={{flexDirection: 'column', flex:1}}>
 
+    <MainView />
 
-    <Secured2 />
-
-        </View>
+    </View>
       </Animated.View>
     );
   }
@@ -98,14 +97,17 @@ onComponentMount(){
   var styles = StyleSheet.create({
   greyBackground: {
     flex: 1,
+    width:subviewWidth,
+    height: windowHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '"rgba(211,211,211,1)"',
     marginTop: 0
   },
   notHidden: {
     width:subviewWidth,
-    backgroundColor: "rgba(0,0,0,0)",
+    height: windowHeight,
+    backgroundColor: "transparent",
   },
   subView:{
     // position:'absolute',

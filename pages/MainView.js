@@ -17,7 +17,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 var windowWidth = Dimensions.get('window').width;
 
-class Secured2 extends Component {
+class MainView extends Component {
 
   constructor(props) {
     super(props);
@@ -242,7 +242,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Secured2);
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);
 
 
 const styles = StyleSheet.create({
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   },
   bar: {
     backgroundColor: 'transparent',
-    marginTop: Platform.OS === 'ios' ? 28 : 38,
+    marginTop: Platform.OS === 'ios' ? 28 : 28,
     height: 40,
     flex:1,
     alignItems: 'center',

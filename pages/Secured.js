@@ -12,9 +12,9 @@ import SideMenu from 'react-native-side-menu';
 import Menu from './components/Menu';
 
 
-const HEADER_MAX_HEIGHT = 300;
-const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
-const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+// const HEADER_MAX_HEIGHT = 300;
+// const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
+// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -23,52 +23,17 @@ class Secured extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
 
     this.state = {
-      scrollY: new Animated.Value(0),
-      bounceValue: new Animated.Value(100),  //This is the initial position of the subview
-      buttonText: "Show Subview",
-      isOpen: false,
-      selectedItem: 'About',
       thisActiveMenu: 'none',
     };
   }
-
-
-  toggle() {
-     this.setState({
-       isOpen: !this.state.isOpen,
-     });
-   }
-
-   updateMenuState(isOpen) {
-     this.setState({ isOpen });
-   }
-
-   onMenuItemSelected = item =>
-     this.setState({
-       isOpen: false,
-       selectedItem: item,
-     });
 
     userLogout(e) {
         this.props.onLogout();
         e.preventDefault();
     }
 
-    _renderScrollViewContent() {
-      const data = Array.from({ length: 30 });
-      return (
-        <View style={styles.scrollViewContent}>
-          {data.map((_, i) => (
-            <View key={i} style={styles.row}>
-              <Text>{i}</Text>
-            </View>
-          ))}
-        </View>
-      );
-    }
 
 
     _renderMainSheet(){
@@ -95,139 +60,16 @@ class Secured extends Component {
 
     _setActiveMenu(activeMenu) {
       this.setState({thisActiveMenu : activeMenu});
-      // alert("setActiveMenu called "+ this.state.thisActiveMenu);
       this.props.setActiveMenu(activeMenu);
     }
 
     render() {
 
-      const headerTranslate = this.state.scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, -HEADER_SCROLL_DISTANCE],
-        extrapolate: 'clamp',
-      });
-
-      const imageOpacity = this.state.scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-        outputRange: [1, 1, 0],
-        extrapolate: 'clamp',
-      });
-      const imageTranslate = this.state.scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, 100],
-        extrapolate: 'clamp',
-      });
-
-      const titleScale = this.state.scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-        outputRange: [1, 1, 0.8],
-        extrapolate: 'clamp',
-      });
-      const titleTranslate = this.state.scrollY.interpolate({
-        inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-        outputRange: [0, 0, -8],
-        extrapolate: 'clamp',
-      });
-
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
-
       return (
 
         <View style={styles.fill}>
-
-              <View style={styles.fill}>
-
-                <View style = {styles.absoluteFill}>
-                  <StatusBar
-                    translucent
-                    barStyle="light-content"
-                    backgroundColor="rgba(0, 0, 0, 0.251)"
-                  />
-                  <Animated.ScrollView
-                  style={styles.fill}
-                  scrollEventThrottle={1}
-                  onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-                    { useNativeDriver: true },
-                  )}
-                  >
-
-                    {this._renderScrollViewContent()}
-
-                </Animated.ScrollView>
-
-                <Animated.View
-                  style={[
-                    styles.header,
-                    { transform: [{ translateY: headerTranslate }] },
-                  ]}
-                >
-                  <Animated.Image
-                    style={[
-                      styles.backgroundImage,
-                      {
-                        opacity: imageOpacity,
-                        transform: [{ translateY: imageTranslate }],
-                      },
-                    ]}
-                    source={require('../redux/images/cat.jpg')}
-                  />
-                </Animated.View>
-
-                <Animated.View
-                  style={[
-                    styles.bar,
-                    {
-                      transform: [
-                        { scale: titleScale },
-                        { translateY: titleTranslate },
-                      ],
-                    },
-                  ]}
-                >
-
-                <View style={{flexDirection: 'row'}}>
-                  <View style={{flex:1, alignItems:'flex-start'}}>
-                  <TouchableHighlight onPress={()=> {this._setActiveMenu("star");}}>
-                    <Image
-                      style={{flex:1}}
-                      source={require('./../redux/images/star.png')}
-                      resizeMode='contain'
-                      />
-                    </TouchableHighlight>
-                  </View>
-
-                  <View style={{flex:1, alignItems:'center'}}>
-                    <TextInput
-                      style={styles.title}
-                      // onChangeText = {return()}
-                      placeholder = "happy"
-                      underlineColorAndroid = "transparent"
-                      multiline={false}
-                    />
-                  </View>
-                  <View style={{flex:1, alignItems:'flex-end'}}>
-                  <TouchableHighlight onPress={()=> {this._setActiveMenu("profile");}}>
-                    <Image
-                      style={{flex:1}}
-                      source={require('./../redux/images/hamburger.png')}
-                      resizeMode='contain'
-                    />
-                  </TouchableHighlight>
-                  </View>
-                </View>
-                </Animated.View>
-              </View>
-
-              <View style={styles.alignBottom}>
-              {this._renderSlidingUpPanel()}
-              </View>
-              <View style={styles.aligntop}>
-              {this._renderSlidingDownPanel()}
-              </View>
               <View style={styles.alignBottom}>
               {this._renderMainSheet()}
-              </View>
               </View>
 
           </View>
@@ -286,24 +128,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#03A9F4',
-    overflow: 'hidden',
-    height: HEADER_MAX_HEIGHT,
-  },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    width: null,
-    height: HEADER_MAX_HEIGHT,
-    resizeMode: 'cover',
-  },
   bar: {
     backgroundColor: 'transparent',
     marginTop: Platform.OS === 'ios' ? 28 : 38,
@@ -325,9 +149,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     textAlignVertical: "bottom",
-  },
-  scrollViewContent: {
-    marginTop: HEADER_MAX_HEIGHT,
   },
   row: {
     height: 40,
